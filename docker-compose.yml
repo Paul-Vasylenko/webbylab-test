@@ -1,0 +1,26 @@
+version: "3.0"
+
+services:
+  main:
+    container_name: main
+    build:
+      context: .
+    env_file:
+      - .env
+    command: npm run dev
+    depends_on:
+      - sqlite
+    ports:
+      - 8000:5000
+  sqlite:
+    container_name: sqlite
+    image: nouchka/sqlite3:latest
+    restart: always
+    stdin_open: true
+    tty: true
+    # volumes:
+    #   - ./database.sqlite3:/app/database.sqlite3
+    volumes:
+      - helloworld:/app/database.sqlite3
+volumes:
+  helloworld:
